@@ -17,15 +17,13 @@
                     int rol = (Integer)miSession.getAttribute("rol");
                     if(rol == 2){
 %>
-<sql:setDataSource var="cnn" driver="com.mysql.jdbc.Driver"
-     url="jdbc:mysql://127.9.104.130:3306/prolevel"
-     user="admind8617kC"  password="GZF2QfCShh-I"/>
+
 <%--  Query con la info del torneo --%>
-<sql:query var="torneo" dataSource="${cnn}">
+<sql:query var="torneo" dataSource="${sessionScope.cnn}">
     SELECT idTorneo, nombre FROM torneo
 </sql:query>
 <%--  Query para que el contexto sea el torneo --%>
-<sql:query var="infotorneo" dataSource="${cnn}">
+<sql:query var="infotorneo" dataSource="${sessionScope.cnn}">
     SELECT *  FROM torneo
     WHERE torneo.idTorneo = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>
@@ -129,7 +127,7 @@ $(document).ready(function() {
             <div class="col-lg-12">
 
                     <%--query de la primera ronda octavos en eli de 16 equipos--%> 
-                    <sql:query var="calendario" dataSource="${cnn}">
+                    <sql:query var="calendario" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -191,7 +189,7 @@ $(document).ready(function() {
                 <div class="panel panel-primary">
                     <div class="panel-heading">Cuartos De Final</div>
                     <%--query para los cuartos--%>
-                    <sql:query var="cuartos" dataSource="${cnn}">
+                    <sql:query var="cuartos" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -250,7 +248,7 @@ $(document).ready(function() {
                 <div class="panel panel-primary">
                     <div class="panel-heading">Semi final</div>
                     <%--query para la semi--%>
-                    <sql:query var="semi" dataSource="${cnn}">
+                    <sql:query var="semi" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -306,7 +304,7 @@ $(document).ready(function() {
             </div>
         </div>
 <%--query para saber si la eli tiene tercer puesto --%>
-<sql:query var="ptercer" dataSource="${cnn}">
+<sql:query var="ptercer" dataSource="${sessionScope.cnn}">
     SELECT tercerPuesto FROM eliminatoria 
     WHERE idEliminatoria = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>
@@ -378,7 +376,7 @@ $(document).ready(function() {
                 <div class="panel panel-primary">
                     <div class="panel-heading">Final</div>
                     <%--query para los cuartos--%>
-                    <sql:query var="fin" dataSource="${cnn}">
+                    <sql:query var="fin" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -440,7 +438,7 @@ $(document).ready(function() {
     <div class="row">
         <div class="col-lg-12">
 <%--query de la primera ronda liga de seis--%> 
-                    <sql:query var="primera" dataSource="${cnn}">
+                    <sql:query var="primera" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -499,7 +497,7 @@ $(document).ready(function() {
 <div class="row">
     <div class="col-lg-12">
         <%--query de la segunda ronda --%> 
-                    <sql:query var="segunda" dataSource="${cnn}">
+                    <sql:query var="segunda" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -561,7 +559,7 @@ $(document).ready(function() {
 <div class="row">
     <div class="col-lg-12">
         <%--query de la tercera ronda --%> 
-                    <sql:query var="tercera" dataSource="${cnn}">
+                    <sql:query var="tercera" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -622,7 +620,7 @@ $(document).ready(function() {
 <div class="row">
     <div class="col-lg-12">
         <%--query de la cuarta ronda --%> 
-                    <sql:query var="cuarta" dataSource="${cnn}">
+                    <sql:query var="cuarta" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -683,7 +681,7 @@ $(document).ready(function() {
 <div class="row">
     <div class="col-lg-12">
         <%--query de la quinta ronda --%> 
-                    <sql:query var="quinta" dataSource="${cnn}">
+                    <sql:query var="quinta" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 

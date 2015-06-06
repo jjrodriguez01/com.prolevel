@@ -9,9 +9,7 @@
 <%@page import="modelo.UsuariosDTO"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<sql:setDataSource var="cnn" driver="com.mysql.jdbc.Driver"
-     url="jdbc:mysql://127.9.104.130:3306/prolevel"
-     user="admind8617kC"  password="GZF2QfCShh-I"/>
+
 <% 
             if (request.getSession()!=null && request.getSession().getAttribute("usr")!=null) {
                     UsuariosDTO udto = new UsuariosDTO();
@@ -21,11 +19,11 @@
                     if(rol == 2){
 %>
 <%--  Query con la info del torneo --%>
-<sql:query var="torneo" dataSource="${cnn}">
+<sql:query var="torneo" dataSource="${sessionScope.cnn}">
     SELECT idTorneo, nombre FROM torneo
 </sql:query>
 <%--  Query para que el contexto sea el torneo --%>
-<sql:query var="infotorneo" dataSource="${cnn}">
+<sql:query var="infotorneo" dataSource="${sessionScope.cnn}">
     SELECT *  FROM torneo
     WHERE torneo.idTorneo = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>
@@ -164,7 +162,7 @@ $('[data-toggle="popover"]').popover(
     }
 %>
                     <%--query de la primera ronda octavos en eli de 16 equipos--%> 
-                    <sql:query var="calendario" dataSource="${cnn}">
+                    <sql:query var="calendario" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -217,7 +215,7 @@ $('[data-toggle="popover"]').popover(
                 <div class="panel panel-success">
                     <div class="panel-heading">Cuartos De Final</div>
                     <%--query para los cuartos--%>
-                    <sql:query var="cuartos" dataSource="${cnn}">
+                    <sql:query var="cuartos" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -266,7 +264,7 @@ $('[data-toggle="popover"]').popover(
                 <div class="panel panel-success" id="psemi">
                     <div class="panel-heading">Semi final</div>
                     <%--query para la semi--%>
-                    <sql:query var="semi" dataSource="${cnn}">
+                    <sql:query var="semi" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -309,7 +307,7 @@ $('[data-toggle="popover"]').popover(
                 </div>
         </div>
 <%--query para saber si la eli tiene tercer puesto --%>
-<sql:query var="ptercer" dataSource="${cnn}">
+<sql:query var="ptercer" dataSource="${sessionScope.cnn}">
     SELECT tercerPuesto FROM eliminatoria 
     WHERE idEliminatoria = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>
@@ -319,7 +317,7 @@ $('[data-toggle="popover"]').popover(
                 <div class="panel panel-success">
                     <div class="panel-heading">Tercer Puesto</div>
                     <%--query para los cuartos--%>
-                    <sql:query var="tercer" dataSource="${cnn}">
+                    <sql:query var="tercer" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -368,7 +366,7 @@ $('[data-toggle="popover"]').popover(
                 <div class="panel panel-success">
                     <div class="panel-heading">Final</div>
                     <%--query para los cuartos--%>
-                    <sql:query var="final" dataSource="${cnn}">
+                    <sql:query var="final" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -427,7 +425,7 @@ $('[data-toggle="popover"]').popover(
                     <h1>Asigna Marcadores</h1>
                 </div>
                     <%--query de la primera ronda importantisimo ordenar todo por numero de partido o me cambia el numero cuando llegue al controlador--%> 
-                    <sql:query var="lpronda" dataSource="${cnn}">
+                    <sql:query var="lpronda" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -477,7 +475,7 @@ $('[data-toggle="popover"]').popover(
 <div class="row">
             <div class="col-lg-12">
                     <%--query de la segunda ronda --%> 
-                    <sql:query var="lsronda" dataSource="${cnn}">
+                    <sql:query var="lsronda" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -528,7 +526,7 @@ $('[data-toggle="popover"]').popover(
 <div class="row">
             <div class="col-lg-12">
                     <%--query de la primera ronda octavos en eli de 16 equipos--%> 
-                    <sql:query var="ltronda" dataSource="${cnn}">
+                    <sql:query var="ltronda" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -579,7 +577,7 @@ $('[data-toggle="popover"]').popover(
 <div class="row">
             <div class="col-lg-12">
                     <%--query de la 4--%> 
-                    <sql:query var="lcronda" dataSource="${cnn}">
+                    <sql:query var="lcronda" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 
@@ -630,7 +628,7 @@ $('[data-toggle="popover"]').popover(
 <div class="row">
             <div class="col-lg-12">
                     <%--query de la quinta ronda--%> 
-                    <sql:query var="lqronda" dataSource="${cnn}">
+                    <sql:query var="lqronda" dataSource="${sessionScope.cnn}">
                         SELECT DISTINCT 
                         (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
                         (select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2, 

@@ -16,22 +16,19 @@
                     int rol = (Integer)miSession.getAttribute("rol");
                     if(rol == 2){
 %>
-<sql:setDataSource var="cnn" driver="com.mysql.jdbc.Driver"
-     url="jdbc:mysql://127.9.104.130:3306/prolevel"
-     user="admind8617kC"  password="GZF2QfCShh-I"/>
 <%--  Query con la info del torneo --%>
-<sql:query var="torneo" dataSource="${cnn}">
+<sql:query var="torneo" dataSource="${sessionScope.cnn}">
     SELECT idTorneo, nombre FROM torneo
 </sql:query>
 <%--  Query para que el contexto sea el torneo --%>
-<sql:query var="infotorneo" dataSource="${cnn}">
+<sql:query var="infotorneo" dataSource="${sessionScope.cnn}">
     SELECT *  FROM torneo
     WHERE torneo.idTorneo = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>
     <%--  pasamos los resultados a una variable --%>
 <c:set var="detallestorneo" value="${infotorneo.rows[0]}" scope="page" />
 <%--  Query para saber cuantos equipos hay inscritos --%>
-<sql:query var="disponibilidad" dataSource="${cnn}">
+<sql:query var="disponibilidad" dataSource="${sessionScope.cnn}">
 select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidtorneo=? <sql:param value="${param.idTorneo}"/>
 </sql:query>
 <%--  pasamos el resultado del query disponibilidad a una variable --%>
@@ -125,7 +122,7 @@ select count(torneoidtorneo) as capacidad  from equiposdeltorneo where torneoidt
                 <div class="page-header">
                     <h1>Equipos</h1>
                 </div>
-                <sql:query var="equipos" dataSource="${cnn}">
+                <sql:query var="equipos" dataSource="${sessionScope.cnn}">
                     select equipo.nombre, equipo.codigo from equipo inner join equiposdeltorneo on
                     equipo.codigo =  equiposdeltorneo.equipoCodigo
                     inner join torneo on

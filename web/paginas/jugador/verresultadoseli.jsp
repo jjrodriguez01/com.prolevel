@@ -11,9 +11,7 @@
 <%@page import="modelo.UsuariosDTO"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<sql:setDataSource var="cnn" driver="com.mysql.jdbc.Driver"
-     url="jdbc:mysql://127.9.104.130:3306/prolevel"
-     user="admind8617kC"  password="GZF2QfCShh-I"/>
+
 <% 
             if (request.getSession()!=null && request.getSession().getAttribute("usr")!=null) {
                     UsuariosDTO udto = new UsuariosDTO();
@@ -24,11 +22,11 @@
                     if(rol == 2){
 %>
 <%--  Query con la info del torneo --%>
-<sql:query var="torneo" dataSource="${cnn}">
+<sql:query var="torneo" dataSource="${sessionScope.cnn}">
     SELECT idTorneo, nombre FROM torneo
 </sql:query>
 <%--  Query para que el contexto sea el torneo --%>
-<sql:query var="infotorneo" dataSource="${cnn}">
+<sql:query var="infotorneo" dataSource="${sessionScope.cnn}">
     SELECT *  FROM torneo
     WHERE torneo.idTorneo = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>
@@ -142,7 +140,7 @@
             <div class="arbol_eli16">
                 <div id="p1">
                     <%--query del 1 partdido--%>
-<sql:query var="p1" dataSource="${cnn}">
+<sql:query var="p1" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -175,7 +173,7 @@ and numero = 1;
                 </div>
 
 <%--query del 2 partdido--%>
-<sql:query var="p2" dataSource="${cnn}">
+<sql:query var="p2" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -210,7 +208,7 @@ and numero = 2;
 <div id="uniong1uno"></div>
 <div id="uniong1dos"></div>
 <%--query del 3 partdido--%>
-<sql:query var="p3" dataSource="${cnn}">
+<sql:query var="p3" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -245,7 +243,7 @@ and numero = 3;
 
 
 <%--query del 4 partdido--%>
-<sql:query var="p4" dataSource="${cnn}">
+<sql:query var="p4" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -280,7 +278,7 @@ and numero = 4;
 <div id="uniong2uno"></div>
 <div id="uniong2dos"></div>
 <%--query del 5 partdido--%>
-<sql:query var="p5" dataSource="${cnn}">
+<sql:query var="p5" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -315,7 +313,7 @@ and numero = 5;
 <div id="uniong3uno"></div>
 <div id="uniong3dos"></div>
 <%--query del 6 partdido--%>
-<sql:query var="p6" dataSource="${cnn}">
+<sql:query var="p6" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -349,7 +347,7 @@ and numero = 6;
 </div>
 
 <%--query del 7 partdido--%>
-<sql:query var="p7" dataSource="${cnn}">
+<sql:query var="p7" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -384,7 +382,7 @@ and numero = 7;
 
 
 <%--query del 8 partdido--%>
-<sql:query var="p8" dataSource="${cnn}">
+<sql:query var="p8" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -419,7 +417,7 @@ and numero = 8;
 <div id="uniong4uno"></div>
 <div id="uniong4dos"></div>
 <%--query del 1 partdido de cuartos--%>
-<sql:query var="p1cuartos" dataSource="${cnn}">
+<sql:query var="p1cuartos" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -453,7 +451,7 @@ and numero = 1;
 </div>
 
 <%--query del 2 partdido de cuartos--%>
-<sql:query var="p2cuartos" dataSource="${cnn}">
+<sql:query var="p2cuartos" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -488,7 +486,7 @@ and numero = 2;
 
 
 <%--query del 3 partdido de cuartos--%>
-<sql:query var="p3cuartos" dataSource="${cnn}">
+<sql:query var="p3cuartos" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -523,7 +521,7 @@ and numero = 3;
 
 
 <%--query del 4 partdido de cuartos--%>
-<sql:query var="p4cuartos" dataSource="${cnn}">
+<sql:query var="p4cuartos" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -559,7 +557,7 @@ and numero = 4;
 
 
 <%--query del 1 partdido de semi--%>
-<sql:query var="p4cuartos" dataSource="${cnn}">
+<sql:query var="p4cuartos" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -595,7 +593,7 @@ and numero = 1;
 <div id="uniong5dos"></div>
 
 <%--query del 2 partdido de semi--%>
-<sql:query var="p4cuartos" dataSource="${cnn}">
+<sql:query var="p4cuartos" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -632,7 +630,7 @@ and numero = 2;
 
 
 <%--query del partdido de la final--%>
-<sql:query var="pfin" dataSource="${cnn}">
+<sql:query var="pfin" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,
@@ -671,7 +669,7 @@ and numero = 1;
 <div id="uniong7dos"></div>
 
 <%--query del partdido de la final--%>
-<sql:query var="ptercer" dataSource="${cnn}">
+<sql:query var="ptercer" dataSource="${sessionScope.cnn}">
 select 
    (select equipo.nombre from equipo where codigo=partidos.equipo1)as eq1, 
 	(select equipo.nombre from equipo where codigo=partidos.equipo2)as eq2,

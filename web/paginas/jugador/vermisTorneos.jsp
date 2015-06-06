@@ -18,24 +18,22 @@
                     int rol = (Integer)miSession.getAttribute("rol");
                     if(rol == 2){
         %>
-<sql:setDataSource var="cnn" driver="com.mysql.jdbc.Driver"
-     url="jdbc:mysql://127.9.104.130:3306/prolevel"
-     user="admind8617kC"  password="GZF2QfCShh-I"/>
+
 <%--  Query para con la info de torneos --%>
-<sql:query var="torneo" dataSource="${cnn}">
+<sql:query var="torneo" dataSource="${sessionScope.cnn}">
     SELECT idTorneo, nombre FROM torneo
 </sql:query>
 <%--  Query para que el contexto sea el torneo --%>
-<sql:query var="infotorneo" dataSource="${cnn}">
+<sql:query var="infotorneo" dataSource="${sessionScope.cnn}">
     SELECT *  FROM torneo
     WHERE torneo.idTorneo = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>
-<sql:query var="tposregistros" dataSource="${cnn}">
+<sql:query var="tposregistros" dataSource="${sessionScope.cnn}">
     SELECT count(*) from tablaposiciones where idTorneo = ? <sql:param value="${param.idTorneo}"/>
 </sql:query>    
 <c:set var="detallestorneo" value="${infotorneo.rows[0]}"/>
 <%--  Query para la tabla de posiciones --%>
-<sql:query var="tablaposiciones" dataSource="${cnn}">
+<sql:query var="tablaposiciones" dataSource="${sessionScope.cnn}">
     SELECT equipo.nombre, 
     tablaposiciones.partidosJugados as PJ,
     tablaposiciones.partidosGanados as PG, 
@@ -56,7 +54,7 @@
     ORDER BY pts DESC, Goles DESC, GC ASC
 </sql:query>
 <%--  Query para la tabla de goleadores --%>            
-<sql:query var="tablagoleadores" dataSource="${cnn}">
+<sql:query var="tablagoleadores" dataSource="${sessionScope.cnn}">
     SELECT DISTINCT usuarios.primerNombre, 
     usuarios.primerApellido, tablagoleadores.numeroGoles, 
     equipo.nombre
@@ -76,7 +74,7 @@
     ORDER BY numeroGoles DESC
 </sql:query>
 <%--  Query para la tabla de tarjetas --%>  
-<sql:query var="tarjetas" dataSource="${cnn}">
+<sql:query var="tarjetas" dataSource="${sessionScope.cnn}">
     SELECT DISTINCT concat(usuarios.primerNombre,' ', usuarios.primerApellido), 
     tarjetas.tarjetaAzul, tarjetas.tarjetaRoja, equipo.nombre
     FROM tarjetas
